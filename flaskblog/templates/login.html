@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{%block content%}
+    <!-- Content section is class in main.css for styling the content with fronts and colors etc-->
+    <div class="content-section">
+        <!-- Action is blank meaning it does not redirect to another route -->
+        <!-- Added novalidate which he did not have to fix error -->
+        <form method="POST" action="" novalidate>
+        <!-- Protects from cross site forgery attacks -->
+            {{ form.hidden_tag() }}
+            <!-- Bootstrap for styling -->
+            <fieldset class="form-group">
+            <!-- mb-4 margin bottom = 4 -->
+            <legend class="border-bottom mb-4">Log In</legend>
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span> {{ error }} </span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-check">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+        <!-- url_for takes in name of route function not name of route -->
+        <!-- A is anchor tag means it links to something, ml is margin left to add spaces between -->
+            Don't Have An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a>
+        </small>
+    </div>
+{% endblock content %}
